@@ -1,3 +1,6 @@
+<?php include "php/db.php"; ?>
+<?php include "php/friends.php"; ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,9 +48,41 @@
     </style>
 </head>
 <body>
+
+  <?php
+    $err="";
+
+    if(isset($_REQUEST['submit'])){
+      //getting user information
+      $name = $_REQUEST["name"];
+      $email = $_REQUEST["email"];
+      $username = $_REQUEST["username"];
+      $password = $_REQUEST["password"];
+      $cpassword = $_REQUEST["cpassword"];
+
+      if(strlen($password)<8){
+        $err = "<br><br><h3>Password must have atleast 8 charactors.</h3>";
+      }else if($password != $cpassword){
+        $err = "<br><br><h3>Enter the same password to confirm.</h3>";
+      }else{
+        if(!isEmailUsed($email)){
+          $query = "INSERT INTO users(name, email, username, password) VALUES('$name', '$email', '$username', '$password')";
+          $res = execute($query);
+          if($res){
+            header("Location: index.php");
+          }else{
+            $err = "<br><br><h3>Unfortunately, your account cannot be created!</h3>";
+          }
+        }else{
+          $err = "<br><br><h4>$email is already used.</h4>";
+        }
+      }
+    }
+  ?>
+
   <div class="form-div">
     <h1>Register</h1>
-    <form action="php/new.php" method="post">
+    <form action=<?php echo $_SERVER['PHP_SELF']?> method="post">
       <div class="input-group">
         <label for="name">Name</label>
         <input type="text" name="name" id="name" required>
@@ -65,9 +100,15 @@
         <input type="password" name="password" id="password" required>
       </div>
       <div class="input-group">
+        <label for="cpassword">Confirm password</label>
+        <input type="password" name="cpassword" id="cpassword" required>
+      </div>
+      <div class="input-group">
         <input type="submit" name="submit" id="submit" value="Register" min="8">
       </div>
     </form>
+    <?php echo $err; ?>
   </div>
+
 </body>
 </html>

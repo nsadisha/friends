@@ -8,6 +8,14 @@
     $result = $conn->query($query);
     return $result;
   }
+  function get($query){
+    global $conn;
+    $result = $conn->query($query);
+    return $result->fetch_assoc();
+  }
+  function alert($message){
+    echo "<script type='text/javascript'>alert('$message');</script>";
+  }
 
   // checking a user is available with username
   function isUserAvailable($username){
@@ -33,24 +41,19 @@
     }
   }
 
-  // add friend
-  function addFriend($email, $friend){
-    $query1 = "INSERT INTO friends(email, friendEmail) VALUES('$email', '$friend')";
-    $query2 = "INSERT INTO friends(email, friendEmail) VALUES('$friend', '$email')";
-    $res = execute($query1);
-    $res = execute($query2);
-    if($res){
-      echo "Added!<br>";
-    }else{
-      echo "Already added!<br>";
-    }
+  // get password for an email
+  function getPasswordForEmail($email){
+    $query = "SELECT password FROM users WHERE email='$email'";
+    $res = get($query);
+    $password = $res["password"];
+    return $password;
   }
-  // remove from friends
-  function removeFriend($email, $friend){
-    $query1 = "DELETE FROM friends WHERE email='$email' and friendEmail='$friend'";
-    $query2 = "DELETE FROM friends WHERE email='$friend' and friendEmail='$email'";
-    $res = execute($query1);
-    $res = execute($query2);
+
+  function getMutualFriendsCount($email, $person){
+    $query = "SELECT email FROM users WHERE email IN (SELECT friendEmail FROM friends WHERE email=\"$person\") AND email IN (SELECT friendEmail FROM friends WHERE email=\"$email\")";
+    $res = execute($query);
+
+    return $res->num_rows;
   }
 
 ?>
