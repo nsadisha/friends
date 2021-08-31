@@ -57,10 +57,6 @@
         <input type="email" name="email" id="email" required>
       </div>
       <div class="input-group">
-        <label for="email">Email</label>
-        <input type="text" name="email" id="email" required>
-      </div>
-      <div class="input-group">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required>
       </div>
