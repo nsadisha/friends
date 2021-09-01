@@ -45,6 +45,9 @@
         margin-top: 1rem;
         cursor: pointer;
       }
+      .err{
+        color: red;
+      }
     </style>
 </head>
 <body>
@@ -61,9 +64,9 @@
       $cpassword = $_REQUEST["cpassword"];
 
       if(strlen($password)<8){
-        $err = "<br><br><h3>Password must have atleast 8 charactors.</h3>";
+        $err = "<br><br><h3 class=\"err\">Password must have atleast 8 charactors.</h3>";
       }else if($password != $cpassword){
-        $err = "<br><br><h3>Enter the same password to confirm.</h3>";
+        $err = "<br><br><h3 class=\"err\">Enter the same password to confirm.</h3>";
       }else{
         if(!isEmailUsed($email)){
           $query = "INSERT INTO users(name, email, username, password) VALUES('$name', '$email', '$username', '$password')";
@@ -71,10 +74,10 @@
           if($res){
             header("Location: index.php");
           }else{
-            $err = "<br><br><h3>Unfortunately, your account cannot be created!</h3>";
+            $err = "<br><br><h3 class=\"err\">Username is already taked. Use a differnt one.</h3>";
           }
         }else{
-          $err = "<br><br><h4>$email is already used.</h4>";
+          $err = "<br><br><h3 class=\"err\">$email is already used.</h3>";
         }
       }
     }

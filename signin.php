@@ -45,6 +45,9 @@
         margin-top: 1rem;
         cursor: pointer;
       }
+      .err{
+        color: red;
+      }
     </style>
 </head>
 <body>
@@ -57,14 +60,14 @@
       $password = $_REQUEST["password"];
 
       if(strlen($password)<8){
-        $err =  "<br><br><h3>Invalid password. Password is less than 8 charactors.</h3>";
+        $err =  "<br><br><h3 class=\"err\">Invalid password. Password is less than 8 charactors.</h3>";
       }else{
         if(isEmailUsed($email)){
           if($password == getPasswordForEmail($email)){
             $_SESSION['email'] = $email;
             header("Location: index.php");
           }else{
-            $err = "<br><br><h3>Incorrect password.</h3>";
+            $err = "<br><br><h3 class=\"err\">Incorrect password.</h3>";
           }
         }
       }
