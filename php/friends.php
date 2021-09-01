@@ -13,8 +13,18 @@
     $result = $conn->query($query);
     return $result->fetch_assoc();
   }
-  function alert($message){
-    echo "<script type='text/javascript'>alert('$message');</script>";
+
+  // get all usersCount
+  function getAllUsersCount(){
+    $query="SELECT email FROM users";
+    $res=execute($query);
+    return $res->num_rows;
+  }
+  //get total connections
+  function getTotalConnections(){
+    $query="SELECT email FROM friends";
+    $res=execute($query);
+    return ($res->num_rows)/2;
   }
 
   // checking a user is available with username

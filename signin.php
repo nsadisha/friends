@@ -83,7 +83,7 @@
         <input type="password" name="password" id="password" required>
       </div>
       <div class="input-group">
-        <input type="submit" name="submit" id="submit" value="Sign in" min="8">
+        <input type="submit" name="submit" id="submit" value="Sign in">
       </div>
     </form>
     <?php echo $err; ?>
