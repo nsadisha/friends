@@ -1,6 +1,7 @@
 <?php include "db.php"; ?>
 
 <?php
+  //This file contains some php functions to make the process easier.
 
   //execute a query
   function execute($query){
